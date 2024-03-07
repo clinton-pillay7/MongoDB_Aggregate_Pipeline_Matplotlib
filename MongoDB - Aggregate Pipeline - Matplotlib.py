@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[58]:
-
 
 from pymongo import MongoClient
 import requests
@@ -40,9 +38,6 @@ wts = reqjsona["Weekly Time Series"]
 wts = {outer_key: {inner_key.replace(". ", "_"): inner_val for inner_key, inner_val in outer_val.items()} for outer_key, outer_val in wts.items()}
 
 
-# In[16]:
-
-
 # establish connecttion parameters
 client = MongoClient('127.0.0.1', 27017)
 db_name = 'alpha'
@@ -68,9 +63,6 @@ for t in wts:
     results = list(resultab)
     if len(results) == 0:
         weekcol.insert_one(bdic)
-
-
-# In[17]:
 
 
 #average of all values example
@@ -137,10 +129,6 @@ highavg = weekcol.aggregate([
 for higha in highavg:
     print(higha)
 
-
-# In[18]:
-
-
 aggpricing = {}
 
 aggpricing.update(opena)
@@ -149,24 +137,14 @@ aggpricing.update(lowa)
 aggpricing.update(higha)
 
 
-# In[19]:
-
-
 del aggpricing["_id"]
 aggpricing
-
-
-# In[20]:
-
 
 
 keys = aggpricing.keys()
 values = aggpricing.values()
 plt.bar(keys, values)
 plt.title("All time Averages")
-
-
-# In[21]:
 
 
 #works fine: find gte - lte date range - BUT Not through aggregation pipeline
@@ -183,10 +161,6 @@ resultwww = weekcol.find({
 
 for ttt in resultwww:
     print(ttt)
-
-
-# In[30]:
-
 
 # GT and LT date - working fine!!!!!!!!!!!!!!!
 betdate = weekcol.aggregate([
@@ -209,11 +183,6 @@ betdate = weekcol.aggregate([
 for bdate in betdate:
     print(bdate)
     
-
-    
-
-
-# In[80]:
 
 
 # GT and LT date - working fine!!!!!!!!!!!!!!!
@@ -253,62 +222,11 @@ for bdate in betdate:
     jandic["Average_closing_price"] = bdate["average_closing_price"]
     
 
-    
-
-
-# In[82]:
-
 
 del jandic["Title"]
-
-
-# In[85]:
 
 
 keys = jandic.keys()
 values = jandic.values()
 plt.bar(keys, values)
 plt.title("January")
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
